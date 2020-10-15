@@ -37,4 +37,30 @@ marvel_df.columns = col_names
 marvel_df.index = marvel_df['name']
   # Eliminate the column named Name, becasue this column became the index
 marvel_df = marvel_df.drop(['name'], axis=1)
-
+  #Modify the first_appearance of 'Vision' to year 1964
+marvel_df.loc['Vision', 'first_appearance'] = 1964
+ #Add a new column
+marvel_df['years_since'] = 2018 - marvel_df['first_appearance']
+  #Make a mask showing the female characters
+mask = marvel_df['sex'] == 'female'
+  #Get the characters with first_appearance after 1970
+mask = marvel_df['first_appearance'] > 1970
+  #Get the female characters with first_appearance after 1970
+mask = (marvel_df['sex'] == 'female') & (marvel_df['first_appearance'] > 1970)
+  #Show basic statistics
+marvel_df.describe()
+  #Show the mean value of first_appearance
+np.mean(marvel_df.first_appearance)
+  #Other option
+marvel_df.first_appearance.mean()
+  #Show the min value of first_appearance
+marvel_df.first_appearance.min()
+  #Get the characters with the min value of first_appearance
+mask = marvel_df['first_appearance'] == marvel_df.first_appearance.min()
+marvel_df[mask] #this one is to show the previous command
+  #Reset index names of marvel_df
+marvel_df = marvel_df.reset_index()
+  # Plot the values of first_appearance
+marvel_df.first_appearance.plot() #Other_option plt.plot(marvel_df.index, marvel_df.first_appearance)
+  #Plot a histogram (plot.hist) with values of first_appearance
+plt.hist(marvel_df.first_appearance)
